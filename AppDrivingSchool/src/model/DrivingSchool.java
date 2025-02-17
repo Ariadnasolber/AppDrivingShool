@@ -150,8 +150,8 @@ public class DrivingSchool {
         double revenue = 0;
         for (Student student : studentsList) {
             // Simulación: asume que ClassStudent tiene un método getPayment()
-            // revenue += student.getPayment();
-            revenue += 100; // Valor fijo para simulación
+            revenue += student.getRegistrationFee();
+            //revenue += 100; // Valor fijo para simulación
         }
         return revenue;
     }
@@ -164,8 +164,8 @@ public class DrivingSchool {
         }
         for (Teacher teacher : teachersList) {
             // Simulación: asume que ClassTeacher tiene un método getSalary()
-            // expenses += teacher.getSalary();
-            expenses += 1500; // Valor fijo para simulación
+            expenses += teacher.getSalary();
+            //expenses += 1500; // Valor fijo para simulación
         }
         return expenses;
     }
