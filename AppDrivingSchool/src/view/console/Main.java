@@ -36,6 +36,8 @@ public class Main {
                 case 10 -> System.out.println(drivingSchool.studentsWithPracticalPending());
                 case 11 -> calculateFinancials(drivingSchool);
                 case 12 -> evaluateStudent(scanner, drivingSchool);
+                case 13 -> System.out.println(drivingSchool.listApprovedStudents());
+                case 14 -> System.out.println(drivingSchool.listNotApprovedStudents());
                 case 0 -> System.out.println("Saliendo del sistema...");
                 default -> System.out.println("Opción inválida. Por favor, elige una opción válida.");
             }
@@ -58,6 +60,8 @@ public class Main {
         System.out.println("10) Listar datos de alumnos con pendiente el examen práctico");
         System.out.println("11) Calcular ingresos totales y gastos totales");
         System.out.println("12) Evaluar un alumno (aprobar teoría y/o práctica)");
+        System.out.println("13) Listar alumnos aprobados");
+        System.out.println("14) Listar alumnos no aprobados");
         System.out.println("0) Salir");
         System.out.print("Elige una opción: ");
     }
@@ -184,15 +188,22 @@ public class Main {
 
     private static void evaluateStudent(Scanner scanner, DrivingSchool drivingSchool) {
         System.out.println("\n--- Evaluar Alumno ---");
-        System.out.print("Introduce el índice del alumno a evaluar: ");
-        int studentIndex = scanner.nextInt();
+        System.out.print("Introduce el ID del alumno a evaluar: ");
+        String studentId = scanner.nextLine();
         System.out.print("Introduce el nuevo estado de aprobación (1: aprobado, 0: no aprobado): ");
         int approvalStatus = scanner.nextInt();
-        if (studentIndex >= 0 && studentIndex < drivingSchool.getStudentsList().size()) {
-            drivingSchool.getStudentsList().get(studentIndex).evaluateStudent(approvalStatus);
+        scanner.nextLine(); // Consumir nueva línea
+
+        Student studentToEvaluate = drivingSchool.getStudentsList().stream()
+                .filter(student -> student.getId().equals(studentId))
+                .findFirst()
+                .orElse(null);
+
+        if (studentToEvaluate != null) {
+            studentToEvaluate.setApprovalStatus(approvalStatus);
             System.out.println("Estado del alumno actualizado.");
         } else {
-            System.out.println("Índice inválido.");
+            System.out.println("No se encontró un alumno con el ID proporcionado.");
         }
     }
 }
